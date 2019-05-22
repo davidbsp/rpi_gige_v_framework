@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+
+import rpi_gige_v_framework as gige
+import cv2
+import sys
+import rospy
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge, CvBridgeError
+
+def dalsa_publisher():
+    rospy.init_node('ros_image_publisher')
+    camera_frame = rospy.get_param('~dalsa_camera_frame', "dalsa_link")
+    camera_topic = rospy.get_param('~dalsa_camera_topic', "dalsa_camera")
+    show_window = rospy.get_param('~show_window', False)
+    camera_id = rospy.get_param('~camera_id', 0)
+
+    camera_list=gige.GigE_V_VideoCapture.get_camera_list()
+    print(camera_list)
+    
+    cam=gige.GigE_V_VideoCapture()
+    cam.open(camera_id)
+    
+    for i in range(3):
+        #Dump a few frames to clear buffers
+        cam.read()
+
+    bridge = CvBridge()
+    pub = rospy.Publisher(camera_topic, Image, queue_size=10)
+    rate = rospy.Rate(36) #the camera actually works at 35 fps
+    start_publish = True
+    
+    rate = rospy.Rate(36) #the camera actually works at 35 fps
+
+    while not rospy.is_shutdown():
+        res, img=cam.read()    
+        if (show_window):
+            #OpenCV stuff:
+            cv2.imshow('',img)
+            cv2.waitKey(1)
+        #ROS stuff:
+        pub_img = bridge.cv2_to_imgmsg(img, encoding="passthrough")
+        pub_img.header.frame_id = camera_frame
+        pub_img.header.stamp = rospy.Time.now()
+        pub.publish(pub_img)
+
+        rate.sleep() 
+    
+    if (show_window):    
+        cv2.destroyAllWindows() 
+
+    cam.release()
+       
+
+if __name__ == '__main__':
+    try:
+        dalsa_publisher()
+    except rospy.ROSInterruptException:
+        cam.release()
+        pass

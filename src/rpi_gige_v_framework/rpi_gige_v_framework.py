@@ -162,6 +162,9 @@ class GigE_V_VideoCapture(object):
         if (self._camera is not None):
             gevapi.GevCloseCamera(self._camera)            
             self._camera=None
+            gevapi.GevStopImageTransfer(-1)  # not working at the moment
+            gevapi.GevAbortImageTransfer() # not working at the moment
+            gevapi.GevReleaseImageBuffer()
             
 
     def read(self):

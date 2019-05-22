@@ -1,7 +1,7 @@
 '''Wrapper for gevoslib.h
 
 Generated with:
-/home/wasonj/.local/bin/ctypesgen.py -lGevApi gevoslib.h -o gevoslib.py
+ctypesgen.py -lGevApi /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h -o gevoslib.py
 
 Do not modify this file.
 '''
@@ -594,15 +594,15 @@ _libs["GevApi"] = load_library("GevApi")
 
 # No modules
 
-__time_t = c_long # /usr/include/x86_64-linux-gnu/bits/types.h: 139
+__time_t = c_long # /usr/include/x86_64-linux-gnu/bits/types.h: 148
 
-__suseconds_t = c_long # /usr/include/x86_64-linux-gnu/bits/types.h: 141
+__suseconds_t = c_long # /usr/include/x86_64-linux-gnu/bits/types.h: 150
 
-u_int16_t = c_uint # /usr/include/x86_64-linux-gnu/sys/types.h: 174
+u_int16_t = c_uint # /usr/include/x86_64-linux-gnu/sys/types.h: 162
 
-u_int32_t = c_uint # /usr/include/x86_64-linux-gnu/sys/types.h: 175
+u_int32_t = c_uint # /usr/include/x86_64-linux-gnu/sys/types.h: 163
 
-# /usr/include/x86_64-linux-gnu/bits/time.h: 30
+# /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h: 8
 class struct_timeval(Structure):
     pass
 
@@ -615,9 +615,7 @@ struct_timeval._fields_ = [
     ('tv_usec', __suseconds_t),
 ]
 
-pthread_t = c_ulong # /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 60
-
-# /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 75
+# /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h: 82
 class struct___pthread_internal_list(Structure):
     pass
 
@@ -630,9 +628,9 @@ struct___pthread_internal_list._fields_ = [
     ('__next', POINTER(struct___pthread_internal_list)),
 ]
 
-__pthread_list_t = struct___pthread_internal_list # /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 79
+__pthread_list_t = struct___pthread_internal_list # /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h: 86
 
-# /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 92
+# /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h: 118
 class struct___pthread_mutex_s(Structure):
     pass
 
@@ -657,24 +655,43 @@ struct___pthread_mutex_s._fields_ = [
     ('__list', __pthread_list_t),
 ]
 
-# /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 128
+# /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h: 151
+class struct___pthread_cond_s(Structure):
+    pass
+
+struct___pthread_cond_s.__slots__ = [
+    '__g_refs',
+    '__g_size',
+    '__g1_orig_size',
+    '__wrefs',
+    '__g_signals',
+]
+struct___pthread_cond_s._fields_ = [
+    ('__g_refs', c_uint * 2),
+    ('__g_size', c_uint * 2),
+    ('__g1_orig_size', c_uint),
+    ('__wrefs', c_uint),
+    ('__g_signals', c_uint * 2),
+]
+
+pthread_t = c_ulong # /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 27
+
+# /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 36
 class union_anon_9(Union):
     pass
 
 union_anon_9.__slots__ = [
-    '__data',
     '__size',
     '__align',
 ]
 union_anon_9._fields_ = [
-    ('__data', struct___pthread_mutex_s),
-    ('__size', c_char * 40),
-    ('__align', c_long),
+    ('__size', c_char * 4),
+    ('__align', c_int),
 ]
 
-pthread_mutex_t = union_anon_9 # /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 128
+pthread_mutexattr_t = union_anon_9 # /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 36
 
-# /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 134
+# /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 45
 class union_anon_10(Union):
     pass
 
@@ -687,34 +704,26 @@ union_anon_10._fields_ = [
     ('__align', c_int),
 ]
 
-pthread_mutexattr_t = union_anon_10 # /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 134
+pthread_condattr_t = union_anon_10 # /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 45
 
-# /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 141
-class struct_anon_11(Structure):
+# /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 72
+class union_anon_11(Union):
     pass
 
-struct_anon_11.__slots__ = [
-    '__lock',
-    '__futex',
-    '__total_seq',
-    '__wakeup_seq',
-    '__woken_seq',
-    '__mutex',
-    '__nwaiters',
-    '__broadcast_seq',
+union_anon_11.__slots__ = [
+    '__data',
+    '__size',
+    '__align',
 ]
-struct_anon_11._fields_ = [
-    ('__lock', c_int),
-    ('__futex', c_uint),
-    ('__total_seq', c_ulonglong),
-    ('__wakeup_seq', c_ulonglong),
-    ('__woken_seq', c_ulonglong),
-    ('__mutex', POINTER(None)),
-    ('__nwaiters', c_uint),
-    ('__broadcast_seq', c_uint),
+union_anon_11._fields_ = [
+    ('__data', struct___pthread_mutex_s),
+    ('__size', c_char * 40),
+    ('__align', c_long),
 ]
 
-# /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 154
+pthread_mutex_t = union_anon_11 # /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 72
+
+# /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 80
 class union_anon_12(Union):
     pass
 
@@ -724,39 +733,24 @@ union_anon_12.__slots__ = [
     '__align',
 ]
 union_anon_12._fields_ = [
-    ('__data', struct_anon_11),
+    ('__data', struct___pthread_cond_s),
     ('__size', c_char * 48),
     ('__align', c_longlong),
 ]
 
-pthread_cond_t = union_anon_12 # /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 154
+pthread_cond_t = union_anon_12 # /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 80
 
-# /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 160
-class union_anon_13(Union):
-    pass
+UINT16 = u_int16_t # /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/cordef.h: 801
 
-union_anon_13.__slots__ = [
-    '__size',
-    '__align',
-]
-union_anon_13._fields_ = [
-    ('__size', c_char * 4),
-    ('__align', c_int),
-]
+UINT32 = u_int32_t # /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/cordef.h: 803
 
-pthread_condattr_t = union_anon_13 # /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h: 160
+BOOL = c_int # /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/posixcmn.h: 166
 
-UINT16 = u_int16_t # /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/cordef.h: 801
+enum_anon_89 = c_int # /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/corposix.h: 191
 
-UINT32 = u_int32_t # /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/cordef.h: 803
+MutexType_t = enum_anon_89 # /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/corposix.h: 191
 
-BOOL = c_int # /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/posixcmn.h: 166
-
-enum_anon_91 = c_int # /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/corposix.h: 191
-
-MutexType_t = enum_anon_91 # /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/corposix.h: 191
-
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/corposix.h: 204
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/corposix.h: 204
 class struct__CRITICAL_SECTION(Structure):
     pass
 
@@ -783,41 +777,41 @@ struct__CRITICAL_SECTION._fields_ = [
     ('savedThreadCancelState', c_int),
 ]
 
-CRITICAL_SECTION = struct__CRITICAL_SECTION # /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/corposix.h: 204
+CRITICAL_SECTION = struct__CRITICAL_SECTION # /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/corposix.h: 204
 
-HANDLE = POINTER(None) # /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/corposix.h: 237
+HANDLE = POINTER(None) # /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/corposix.h: 237
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 68
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 68
 if hasattr(_libs['GevApi'], '_InitSocketAPI'):
     _InitSocketAPI = _libs['GevApi']._InitSocketAPI
     _InitSocketAPI.argtypes = []
     _InitSocketAPI.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 69
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 69
 if hasattr(_libs['GevApi'], '_CloseSocketAPI'):
     _CloseSocketAPI = _libs['GevApi']._CloseSocketAPI
     _CloseSocketAPI.argtypes = []
     _CloseSocketAPI.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 70
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 70
 if hasattr(_libs['GevApi'], '_GetSocketError'):
     _GetSocketError = _libs['GevApi']._GetSocketError
     _GetSocketError.argtypes = []
     _GetSocketError.restype = c_int
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 73
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 73
 if hasattr(_libs['GevApi'], '_GetMaxNetworkInterfaces'):
     _GetMaxNetworkInterfaces = _libs['GevApi']._GetMaxNetworkInterfaces
     _GetMaxNetworkInterfaces.argtypes = []
     _GetMaxNetworkInterfaces.restype = c_int
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 74
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 74
 if hasattr(_libs['GevApi'], '_GetMacAddress'):
     _GetMacAddress = _libs['GevApi']._GetMacAddress
     _GetMacAddress.argtypes = [c_int, POINTER(UINT16), POINTER(UINT32), POINTER(UINT32), POINTER(UINT32)]
     _GetMacAddress.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 75
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 75
 for _lib in _libs.itervalues():
     if not hasattr(_lib, '_SetIPAddress'):
         continue
@@ -826,163 +820,163 @@ for _lib in _libs.itervalues():
     _SetIPAddress.restype = BOOL
     break
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 76
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 76
 if hasattr(_libs['GevApi'], '_GetMTUSetting'):
     _GetMTUSetting = _libs['GevApi']._GetMTUSetting
     _GetMTUSetting.argtypes = [c_int, POINTER(c_int)]
     _GetMTUSetting.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 79
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 79
 if hasattr(_libs['GevApi'], '_CreateEvent'):
     _CreateEvent = _libs['GevApi']._CreateEvent
     _CreateEvent.argtypes = [POINTER(HANDLE)]
     _CreateEvent.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 80
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 80
 if hasattr(_libs['GevApi'], '_DestroyEvent'):
     _DestroyEvent = _libs['GevApi']._DestroyEvent
     _DestroyEvent.argtypes = [POINTER(HANDLE)]
     _DestroyEvent.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 81
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 81
 if hasattr(_libs['GevApi'], '_WaitForEvent'):
     _WaitForEvent = _libs['GevApi']._WaitForEvent
     _WaitForEvent.argtypes = [POINTER(HANDLE), UINT32]
     _WaitForEvent.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 82
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 82
 if hasattr(_libs['GevApi'], '_ClearEvent'):
     _ClearEvent = _libs['GevApi']._ClearEvent
     _ClearEvent.argtypes = [POINTER(HANDLE)]
     _ClearEvent.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 83
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 83
 if hasattr(_libs['GevApi'], '_SetEvent'):
     _SetEvent = _libs['GevApi']._SetEvent
     _SetEvent.argtypes = [POINTER(HANDLE)]
     _SetEvent.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 86
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 86
 if hasattr(_libs['GevApi'], '_CreateMutex'):
     _CreateMutex = _libs['GevApi']._CreateMutex
     _CreateMutex.argtypes = [POINTER(pthread_mutex_t)]
     _CreateMutex.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 87
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 87
 if hasattr(_libs['GevApi'], '_DestroyMutex'):
     _DestroyMutex = _libs['GevApi']._DestroyMutex
     _DestroyMutex.argtypes = [POINTER(pthread_mutex_t)]
     _DestroyMutex.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 88
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 88
 if hasattr(_libs['GevApi'], '_AcquireMutex'):
     _AcquireMutex = _libs['GevApi']._AcquireMutex
     _AcquireMutex.argtypes = [POINTER(pthread_mutex_t), UINT32]
     _AcquireMutex.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 89
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 89
 if hasattr(_libs['GevApi'], '_ReleaseMutex'):
     _ReleaseMutex = _libs['GevApi']._ReleaseMutex
     _ReleaseMutex.argtypes = [POINTER(pthread_mutex_t)]
     _ReleaseMutex.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 92
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 92
 if hasattr(_libs['GevApi'], '_InitCriticalSection'):
     _InitCriticalSection = _libs['GevApi']._InitCriticalSection
     _InitCriticalSection.argtypes = [POINTER(CRITICAL_SECTION)]
     _InitCriticalSection.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 93
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 93
 if hasattr(_libs['GevApi'], '_ReleaseCriticalSection'):
     _ReleaseCriticalSection = _libs['GevApi']._ReleaseCriticalSection
     _ReleaseCriticalSection.argtypes = [POINTER(CRITICAL_SECTION)]
     _ReleaseCriticalSection.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 94
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 94
 if hasattr(_libs['GevApi'], '_EnterCriticalSection'):
     _EnterCriticalSection = _libs['GevApi']._EnterCriticalSection
     _EnterCriticalSection.argtypes = [POINTER(CRITICAL_SECTION)]
     _EnterCriticalSection.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 95
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 95
 if hasattr(_libs['GevApi'], '_LeaveCriticalSection'):
     _LeaveCriticalSection = _libs['GevApi']._LeaveCriticalSection
     _LeaveCriticalSection.argtypes = [POINTER(CRITICAL_SECTION)]
     _LeaveCriticalSection.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 99
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 99
 if hasattr(_libs['GevApi'], '_CreateThread'):
     _CreateThread = _libs['GevApi']._CreateThread
     _CreateThread.argtypes = [CFUNCTYPE(UNCHECKED(c_uint), POINTER(None)), POINTER(None), c_int, POINTER(HANDLE)]
     _CreateThread.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 100
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 100
 if hasattr(_libs['GevApi'], '_WaitForThread'):
     _WaitForThread = _libs['GevApi']._WaitForThread
     _WaitForThread.argtypes = [POINTER(HANDLE), UINT32]
     _WaitForThread.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 101
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 101
 if hasattr(_libs['GevApi'], '_GetNumCpus'):
     _GetNumCpus = _libs['GevApi']._GetNumCpus
     _GetNumCpus.argtypes = []
     _GetNumCpus.restype = c_int
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 104
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 104
 if hasattr(_libs['GevApi'], '_IsTimedOut'):
     _IsTimedOut = _libs['GevApi']._IsTimedOut
     _IsTimedOut.argtypes = [POINTER(struct_timeval)]
     _IsTimedOut.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 105
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 105
 if hasattr(_libs['GevApi'], '_GetTimeOut'):
     _GetTimeOut = _libs['GevApi']._GetTimeOut
     _GetTimeOut.argtypes = [c_int, POINTER(struct_timeval)]
     _GetTimeOut.restype = None
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 108
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 108
 if hasattr(_libs['GevApi'], '_Wait'):
     _Wait = _libs['GevApi']._Wait
     _Wait.argtypes = [UINT32]
     _Wait.restype = None
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 109
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 109
 if hasattr(_libs['GevApi'], '_GetTimestamp'):
     _GetTimestamp = _libs['GevApi']._GetTimestamp
     _GetTimestamp.argtypes = [POINTER(UINT32), POINTER(UINT32)]
     _GetTimestamp.restype = BOOL
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 110
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 110
 if hasattr(_libs['GevApi'], '_Convert_to_LEFeature_Order'):
     _Convert_to_LEFeature_Order = _libs['GevApi']._Convert_to_LEFeature_Order
     _Convert_to_LEFeature_Order.argtypes = [UINT32]
     _Convert_to_LEFeature_Order.restype = UINT32
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 111
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 111
 if hasattr(_libs['GevApi'], '_Convert_from_LEFeature_Order'):
     _Convert_from_LEFeature_Order = _libs['GevApi']._Convert_from_LEFeature_Order
     _Convert_from_LEFeature_Order.argtypes = [UINT32]
     _Convert_from_LEFeature_Order.restype = UINT32
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 112
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 112
 if hasattr(_libs['GevApi'], '_CPU_to_LE32'):
     _CPU_to_LE32 = _libs['GevApi']._CPU_to_LE32
     _CPU_to_LE32.argtypes = [UINT32]
     _CPU_to_LE32.restype = UINT32
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 113
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 113
 if hasattr(_libs['GevApi'], '_LE32_to_CPU'):
     _LE32_to_CPU = _libs['GevApi']._LE32_to_CPU
     _LE32_to_CPU.argtypes = [UINT32]
     _LE32_to_CPU.restype = UINT32
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 114
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 114
 if hasattr(_libs['GevApi'], '_CPU_to_BE32'):
     _CPU_to_BE32 = _libs['GevApi']._CPU_to_BE32
     _CPU_to_BE32.argtypes = [UINT32]
     _CPU_to_BE32.restype = UINT32
 
-# /home/wasonj/Downloads/GigE-V-Framework_2.02.0.0132/DALSA/GigeV/include/gevoslib.h: 115
+# /home/david/GigE-V-Framework_2.10.0.0157/DALSA/GigeV/include/gevoslib.h: 115
 if hasattr(_libs['GevApi'], '_BE32_to_CPU'):
     _BE32_to_CPU = _libs['GevApi']._BE32_to_CPU
     _BE32_to_CPU.argtypes = [UINT32]
